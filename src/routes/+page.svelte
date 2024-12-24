@@ -5,10 +5,12 @@
 	let input = $state<HTMLInputElement>();
 
 	function onOpenChange(value: boolean) {
+		console.log(value);
 		openState = value;
 	}
 
 	function handleFocus(e: Event) {
+		console.log(e);
 		e.preventDefault();
 		input?.focus();
 	}
@@ -17,22 +19,21 @@
 <h1 class="mt-4 text-center text-4xl">Menubar Issue</h1>
 
 <Menubar.Root
-	{onOpenChange}
-	class="rounded-10px border-dark-10 bg-background-alt shadow-mini flex h-12 items-center gap-1 border px-[3px]"
+	class="flex h-12 items-center gap-1 rounded-10px border border-dark-10 bg-background-alt px-[3px] shadow-mini"
 >
-	<Menubar.Menu>
+	<Menubar.Menu {onOpenChange}>
 		<Menubar.Trigger
-			class="rounded-9px data-[highlighted]:bg-muted data-[state=open]:bg-muted inline-flex h-10 cursor-default items-center justify-center px-3 text-sm font-medium !ring-0 !ring-transparent"
+			class="inline-flex h-10 cursor-default items-center justify-center rounded-9px px-3 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted data-[state=open]:bg-muted"
 		>
 			HELP ME
 		</Menubar.Trigger>
 		<Menubar.Portal>
 			<Menubar.Content
 				onCloseAutoFocus={handleFocus}
-				class="focus-override border-muted bg-background shadow-popover z-50 w-fit rounded-xl border px-1 py-1.5 focus-visible:outline-none"
+				class="focus-override z-50 w-fit rounded-xl border border-muted bg-background px-1 py-1.5 shadow-popover focus-visible:outline-none"
 			>
 				<Menubar.Item
-					class="rounded-button data-[highlighted]:bg-muted flex h-10 min-w-[130px] select-none items-center py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent"
+					class="flex h-10 min-w-[130px] select-none items-center rounded-button py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted"
 				>
 					Hello
 				</Menubar.Item>
@@ -55,7 +56,7 @@
 	<label for="test-input">Input should focus after closing menu.</label>
 	<input bind:this={input} id="test-input" class="border px-2" type="text" placeholder="Focus" />
 
-	<button class="rounded bg-blue-700 px-1 py-1 text-white" onclick={handleFocus}
+	<button class="rounded bg-blue-700 px-1 py-1 text-white" onclick={() => input?.focus()}
 		>Click to focus</button
 	>
 	<button class="rounded bg-red-700 px-1 py-1 text-white" onclick={() => input?.blur()}
